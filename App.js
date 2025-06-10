@@ -1,10 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import './src/i18n.js'
 
-export default function App() {
+const App = () => {
+  const { t } = useTranslation();
   return (
     <View style={styles.container}>
-      <Text>Andere tekst</Text>
+      <Text>{t('welcome')}</Text>
       <StatusBar style="auto" />
     </View>
   );
@@ -18,3 +21,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export default App;
