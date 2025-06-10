@@ -10,8 +10,8 @@ const BottomTabs = () => {
     const { t } = useTranslation();
     return (
         <Tab.Navigator>
-            <Tab.Screen name="Map" component={MapScreen} options={{ title: t('map_title') }}/>
             <Tab.Screen name="List" component={ListScreen} options={{ title: t('list_title') }}/>
+            <Tab.Screen name="Map" component={MapScreen} options={{ title: t('map_title') }}/>
             <Tab.Screen name="Settings" component={SettingsScreen} options={{ title: t('settings_title') }}/>
         </Tab.Navigator>
     );
