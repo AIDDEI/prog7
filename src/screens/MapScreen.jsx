@@ -12,6 +12,7 @@ const MapScreen = () => {
   const { location, errorMsg } = useCurrentLocation();
   const route = useRoute();
   const mapRef = useRef(null);
+  const markerRefs = useRef({});
 
   const centerOnCurrentLocation = () => {
     if (location && mapRef.current) {
@@ -37,8 +38,19 @@ const MapScreen = () => {
         latitudeDelta: 0.002,
         longitudeDelta: 0.002,
       }, 1000);
+
+      const found = locations.find(
+        loc =>
+          loc.latitude === route.params.latitude &&
+          loc.longitude === route.params.longitude
+      );
+      if (found && markerRefs.current[found.id]) {
+        setTimeout(() => {
+          markerRefs.current[found.id].showCallout();
+        }, 1200);
+      }
     }
-  }, [route.params]);
+  }, [route.params, locations]);
 
   if (errorMsg) {
     return <Text>{errorMsg}</Text>;
@@ -64,6 +76,9 @@ const MapScreen = () => {
         {locations.map((location) => (
           <Marker
             key={location.id}
+            ref={ref => {
+              if (ref) markerRefs.current[location.id] = ref;
+            }}
             coordinate={{
               latitude: location.latitude,
               longitude: location.longitude,
