@@ -1,14 +1,44 @@
 import MapView from "react-native-maps";
 import { Marker } from "react-native-maps";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { useDataFetching } from "../initialization/DataFetching";
 import useCurrentLocation from "../initialization/UseCurrentLocation";
-
 import ligthModeStyle from "../mapStyles/lightMode.json";
+import { useRoute } from '@react-navigation/native';
+import { useEffect, useRef } from 'react';
 
 const MapScreen = () => {
   const locations = useDataFetching();
   const { location, errorMsg } = useCurrentLocation();
+  const route = useRoute();
+  const mapRef = useRef(null);
+
+  const centerOnCurrentLocation = () => {
+    if (location && mapRef.current) {
+      mapRef.current.animateToRegion({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        latitudeDelta: 0.002,
+        longitudeDelta: 0.002,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (
+      route.params &&
+      route.params.latitude &&
+      route.params.longitude &&
+      mapRef.current
+    ) {
+      mapRef.current.animateToRegion({
+        latitude: route.params.latitude,
+        longitude: route.params.longitude,
+        latitudeDelta: 0.002,
+        longitudeDelta: 0.002,
+      }, 1000);
+    }
+  }, [route.params]);
 
   if (errorMsg) {
     return <Text>{errorMsg}</Text>;
@@ -21,6 +51,7 @@ const MapScreen = () => {
   return (
     <View style={{ flex: 1 }}>
       <MapView
+        ref={mapRef}
         style={{ flex: 1 }}
         initialRegion={{
           latitude: location.coords.latitude,
@@ -61,6 +92,9 @@ const MapScreen = () => {
           />
         </Marker>
       </MapView>
+      <TouchableOpacity onPress={centerOnCurrentLocation}>
+        <Text>Mijn Locatie</Text>
+      </TouchableOpacity>
     </View>
   );
 }
