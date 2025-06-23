@@ -93,7 +93,6 @@ const MapScreen = () => {
             latitude: location.coords.latitude,
             longitude: location.coords.longitude,
           }}
-          title="Your Location"
         >
           <View
             style={{
