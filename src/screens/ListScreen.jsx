@@ -13,7 +13,7 @@ const ListScreen = () => {
 
   const renderLocation = ({item}) => (
       <View>
-          <Pressable onPress={() => navigation.navigate('LocationScreen', { name: item.name, description: item.description })}>
+          <Pressable onPress={() => navigation.navigate('LocationScreen', { location: item })}>
               <Text>{item.name}</Text>
           </Pressable>
       </View>

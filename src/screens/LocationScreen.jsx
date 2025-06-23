@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native';
 
 const LocationScreen = ({ route }) => {
-    const { name, description } = route.params;
+    const { location } = route.params;
 
     return (
         <View>
-            <Text>{name}</Text>
-            <Text>{description}</Text>
+            <Text>{location.name}</Text>
+            <Text>{location.description}</Text>
         </View>
     );
 };
