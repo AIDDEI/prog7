@@ -1,9 +1,7 @@
-import { View, Text, Button, Alert, Image, Share, Platform } from 'react-native';
+import { View, Text, Button, Alert, Image, Share } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState, useEffect } from 'react';
-import * as Sharing from 'expo-sharing';
-import * as FileSystem from 'expo-file-system';
 
 const LocationScreen = () => {
     const navigation = useNavigation();
