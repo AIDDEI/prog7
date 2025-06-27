@@ -1,5 +1,5 @@
 import { useRoute, useNavigation } from "@react-navigation/native";
-import locationData from "../customData/locationData";
+import useLocationData from "../customData/useLocationData";
 import { View, Text, TextInput, Button, Image, TouchableOpacity, Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
@@ -7,7 +7,7 @@ const ReviewScreen = () => {
     const route = useRoute();
     const navigation = useNavigation();
     const { location } = route.params || {};
-    const { review, setReview, like, setLike, photoUri, setPhotoUri, saveFeedback } = locationData(location?.id);
+    const { review, setReview, like, setLike, photoUri, setPhotoUri, saveFeedback } = useLocationData(location?.id);
 
     const handleLike = () => {
         setLike(!like);

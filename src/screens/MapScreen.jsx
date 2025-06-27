@@ -1,11 +1,12 @@
 import MapView from "react-native-maps";
 import { Marker } from "react-native-maps";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import { useDataFetching } from "../initialization/DataFetching";
 import useCurrentLocation from "../initialization/UseCurrentLocation";
 import ligthModeStyle from "../mapStyles/lightMode.json";
 import { useRoute } from '@react-navigation/native';
-import { useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const MapScreen = () => {
   const locations = useDataFetching();
@@ -13,6 +14,8 @@ const MapScreen = () => {
   const route = useRoute();
   const mapRef = useRef(null);
   const markerRefs = useRef({});
+  const [markerPhotos, setMarkerPhotos] = useState({});
+  const [photosLoaded, setPhotosLoaded] = useState(false);
 
   const centerOnCurrentLocation = () => {
     if (location && mapRef.current) {
@@ -24,6 +27,26 @@ const MapScreen = () => {
       });
     }
   };
+
+    useEffect(() => {
+      if (locations.length > 0 && !photosLoaded) {
+        const fetchPhotos = async () => {
+          const photos = {};
+          for (const loc of locations) {
+            const data = await AsyncStorage.getItem(`feedback_${loc.id}`);
+            if (data) {
+              const parsed = JSON.parse(data);
+              if (parsed.photoUri) {
+                photos[loc.id] = parsed.photoUri;
+              }
+            }
+          }
+          setMarkerPhotos(photos);
+          setPhotosLoaded(true);
+        };
+        fetchPhotos();
+      }
+  }, [locations, photosLoaded]);
 
   useEffect(() => {
     if (
@@ -85,7 +108,14 @@ const MapScreen = () => {
             }}
             title={location.name}
             description={location.description}
-          />
+          >
+            {markerPhotos[location.id] ? (
+              <Image
+                source={{ uri: markerPhotos[location.id] }}
+                style={{ width: 40, height: 40, borderRadius: 20, borderWidth: 2, borderColor: '#fff' }}
+              />
+            ) : null}
+          </Marker>
         ))}
 
         <Marker

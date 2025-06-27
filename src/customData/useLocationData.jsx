@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function locationData(locationId) {
+export default function useLocationData(locationId) {
     const [review, setReview] = useState('');
     const [like, setLike] = useState(false);
     const [photoUri, setPhotoUri] = useState(null);
