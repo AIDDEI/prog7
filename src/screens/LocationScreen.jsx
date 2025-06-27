@@ -1,7 +1,9 @@
-import { View, Text, Button, Alert, Image } from 'react-native';
+import { View, Text, Button, Alert, Image, Share, Platform } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState, useEffect } from 'react';
+import * as Sharing from 'expo-sharing';
+import * as FileSystem from 'expo-file-system';
 
 const LocationScreen = () => {
     const navigation = useNavigation();
@@ -56,6 +58,18 @@ const LocationScreen = () => {
         }
     };
 
+    const handleShare = async () => {
+        try {
+            let message = `Location: ${location?.name}\n`;
+            if (location?.description) message += `Beschrijving: ${location.description}\n`
+            if (review) message += `Review: ${review}\n`;
+
+            await Share.share({ message })
+        } catch (e) {
+            Alert.alert('Fout', 'Delen mislukt.')
+        }
+    };
+
     return (
         <View>
             <Text>{location?.name}</Text>
@@ -93,6 +107,10 @@ const LocationScreen = () => {
                 title="Verwijder review"
                 color="red"
                 onPress={handleDeleteReview}
+            />
+            <Button
+                title="Deel deze locatie"
+                onPress={handleShare}
             />
         </View>
     );
