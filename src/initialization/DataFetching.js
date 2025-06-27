@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const useDataFetching = () => {
   const [data, setData] = useState([]);
@@ -14,8 +15,16 @@ export const useDataFetching = () => {
       );
       const jsonData = await response.json();
       setData(jsonData);
+      await AsyncStorage.setItem('locations', JSON.stringify(jsonData));
     } catch (error) {
-      console.error(error);
+      try {
+        const localData = await AsyncStorage.getItem('locations');
+        if (localData !== null) {
+          setData(JSON.parse(localData));
+        }
+      } catch (storageError) {
+        console.error(storageError);
+      }
     }
   };
 
