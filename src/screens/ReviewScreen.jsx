@@ -1,5 +1,5 @@
 import { useRoute, useNavigation } from "@react-navigation/native";
-import useLocationData from "../customData/useLocationData";
+import useLocationData from "../functions/useLocationData";
 import { View, Text, TextInput, Button, Image, TouchableOpacity, Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
