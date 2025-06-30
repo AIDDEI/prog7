@@ -1,12 +1,13 @@
+import React from "react";
 import MapView from "react-native-maps";
 import { Marker } from "react-native-maps";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { useDataFetching } from "../initialization/DataFetching";
-import useCurrentLocation from "../initialization/UseCurrentLocation";
+import useCurrentLocation from "../functions/UseCurrentLocation";
+import loadMarkerPhotos from "../functions/LoadMarkerPhotos";
 import ligthModeStyle from "../mapStyles/lightMode.json";
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useFocusEffect } from '@react-navigation/native';
 import { useState, useEffect, useRef } from 'react';
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const MapScreen = () => {
   const locations = useDataFetching();
@@ -15,7 +16,6 @@ const MapScreen = () => {
   const mapRef = useRef(null);
   const markerRefs = useRef({});
   const [markerPhotos, setMarkerPhotos] = useState({});
-  const [photosLoaded, setPhotosLoaded] = useState(false);
 
   const centerOnCurrentLocation = () => {
     if (location && mapRef.current) {
@@ -28,25 +28,11 @@ const MapScreen = () => {
     }
   };
 
-    useEffect(() => {
-      if (locations.length > 0 && !photosLoaded) {
-        const fetchPhotos = async () => {
-          const photos = {};
-          for (const loc of locations) {
-            const data = await AsyncStorage.getItem(`feedback_${loc.id}`);
-            if (data) {
-              const parsed = JSON.parse(data);
-              if (parsed.photoUri) {
-                photos[loc.id] = parsed.photoUri;
-              }
-            }
-          }
-          setMarkerPhotos(photos);
-          setPhotosLoaded(true);
-        };
-        fetchPhotos();
-      }
-  }, [locations, photosLoaded]);
+  useFocusEffect(
+    React.useCallback(() => {
+      loadMarkerPhotos(locations).then(setMarkerPhotos);
+    }, [locations])
+  );
 
   useEffect(() => {
     if (

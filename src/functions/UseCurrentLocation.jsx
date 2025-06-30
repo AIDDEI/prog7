@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import * as Location from "expo-location";
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 export default function useCurrentLocation() {
     const [location, setLocation] = useState(null);
