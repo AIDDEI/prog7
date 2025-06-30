@@ -11,13 +11,13 @@ const LocationScreen = () => {
     const [review, setReview] = useState('');
     const [like, setLike] = useState(false);
     const [photoUri, setPhotoUri] = useState(null);
-    const [error, setError] = useState(null)
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         if(!fromReview) return;
         const unsubscribe = navigation.addListener('beforeRemove', (e) => {
             e.preventDefault();
-            navigation.navigate('List');
+            navigation.navigate('ListScreen');
         });
         return unsubscribe;
     }, [fromReview, navigation]);
