@@ -129,7 +129,7 @@ const LocationScreen = () => {
             />
 
             <Button
-                title={t('button.review')}
+                title={review ? t('button.edit_review') : t('button.review')}
                 onPress={() => navigation.navigate('ReviewScreen', { location })}
             />
 

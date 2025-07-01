@@ -42,6 +42,7 @@ i18next
                         delete_review: "Remove review",
                         share: "Share this location",
                         save: "Save",
+                        edit_review: "Edit review",
                     },
                     location: {
                         retrieve: "Retrieving current location... Please be patient.",
@@ -101,6 +102,7 @@ i18next
                         delete_review: "Verwijder review",
                         share: "Deel deze locatie",
                         save: "Opslaan",
+                        edit_review: "Bewerk review",
                     },
                     location: {
                         retrieve: "Huidige locatie ophalen... Even geduld a.u.b.",
@@ -160,6 +162,7 @@ i18next
                         delete_review: "Bewertung entfernen",
                         share: "Diesen Standort teilen",
                         save: "Speichern",
+                        edit_review: "Bewertung bearbeiten",
                     },
                     location: {
                         retrieve: "Aktueller Standort wird abgerufen ... Bitte warten.",
@@ -219,6 +222,7 @@ i18next
                         delete_review: "Eliminar reseña",
                         share: "Comparte esta ubicación",
                         save: "Ahorrar",
+                        edit_review: "Editar reseña",
                     },
                     location: {
                         retrieve: "Obteniendo ubicación actual... Por favor espere.",
@@ -278,6 +282,7 @@ i18next
                         delete_review: "删除评论",
                         share: "分享此位置",
                         save: "节省",
+                        edit_review: "编辑评论",
                     },
                     location: {
                         retrieve: "正在获取当前位置...请等待。",
