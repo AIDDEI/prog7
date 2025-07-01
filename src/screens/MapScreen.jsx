@@ -1,19 +1,29 @@
-import React from "react";
-import MapView from "react-native-maps";
-import { Marker } from "react-native-maps";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { View, Text } from "react-native";
+import MapView, { Marker } from "react-native-maps";
+import { useRoute, useFocusEffect } from '@react-navigation/native';
+
 import { useDataFetching } from "../initialization/DataFetching";
 import useCurrentLocation from "../functions/useCurrentLocation";
 import loadMarkerPhotos from "../functions/loadMarkerPhotos";
+
+import UploadedImageDisplay from "../components/UploadedImageDisplay";
+import UserMarker from "../components/UserMarker";
+import PressableText from "../components/PressableText";
+
 import ligthModeStyle from "../mapStyles/lightMode.json";
-import { useRoute, useFocusEffect } from '@react-navigation/native';
-import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const MapScreen = () => {
+  const route = useRoute();
+
+  const { t } = useTranslation();
+
+  const mapRef = useRef(null);
+
   const locations = useDataFetching();
   const { location, errorMsg } = useCurrentLocation();
-  const route = useRoute();
-  const mapRef = useRef(null);
+  
   const markerRefs = useRef({});
   const [markerPhotos, setMarkerPhotos] = useState({});
 
@@ -53,6 +63,7 @@ const MapScreen = () => {
           loc.latitude === route.params.latitude &&
           loc.longitude === route.params.longitude
       );
+
       if (found && markerRefs.current[found.id]) {
         setTimeout(() => {
           markerRefs.current[found.id].showCallout();
@@ -66,11 +77,12 @@ const MapScreen = () => {
   }
 
   if (!location) {
-    return <Text>Locatie ophalen...</Text>;
+    return <Text>{t('location.retrieve')}</Text>;
   }
 
   return (
     <View style={{ flex: 1 }}>
+
       <MapView
         ref={mapRef}
         style={{ flex: 1 }}
@@ -82,6 +94,7 @@ const MapScreen = () => {
         }}
         customMapStyle={ligthModeStyle}
       >
+
         {locations.map((location) => (
           <Marker
             key={location.id}
@@ -95,38 +108,31 @@ const MapScreen = () => {
             title={location.name}
             description={location.description}
           >
-            {markerPhotos[location.id] ? (
-              <Image
-                source={{ uri: markerPhotos[location.id] }}
-                style={{ width: 40, height: 40, borderRadius: 20, borderWidth: 2, borderColor: '#fff' }}
-              />
-            ) : null}
+
+            <UploadedImageDisplay
+              uri={markerPhotos[location.id]}
+              style={{ width: 40, height: 40, borderRadius: 20, borderWidth: 2, borderColor: '#fff' }}
+            />
+
           </Marker>
         ))}
 
-        <Marker
-          coordinate={{
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-          }}
-        >
-          <View
-            style={{
-              height: 20,
-              width: 20,
-              borderRadius: 10,
-              backgroundColor: "rgba(0, 122, 255, 0.8)",
-              borderWidth: 3,
-              borderColor: "white",
-            }}
-          />
-        </Marker>
+        <UserMarker
+          location={location}
+          color={"rgba(0, 122, 255, 0.8)"}
+          borderColor={"white"}
+        />
+
       </MapView>
-      <TouchableOpacity onPress={centerOnCurrentLocation}>
-        <Text>Mijn Locatie</Text>
-      </TouchableOpacity>
+
+      <PressableText
+        text={t('location.current')}
+        onPress={centerOnCurrentLocation}
+      />
+
     </View>
+    
   );
-}
+};
 
 export default MapScreen;

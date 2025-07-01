@@ -1,16 +1,22 @@
-import { StatusBar } from 'expo-status-bar';
-import { Text, View } from 'react-native';
+import { Button, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 import { styles } from '../css/styles.js';
 import { useTranslation } from 'react-i18next';
 
 const SettingsScreen = () => {
+  const navigation = useNavigation();
+
   const { t } = useTranslation();
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>{t('test2')}</Text>
-      <StatusBar style="auto" />
+    <View>
+      <Button
+        title={t('settings.language')}
+        onPress={() => navigation.navigate('Language')}
+      />
     </View>
   );
-}
+};
 
 export default SettingsScreen;
