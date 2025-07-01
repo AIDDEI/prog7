@@ -1,22 +1,35 @@
 import { useState, useEffect } from "react";
 import * as Location from "expo-location";
 
+import { useTranslation } from 'react-i18next';
+
 export default function useCurrentLocation() {
+    const { t } = useTranslation();
+
     const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
 
     useEffect(() => {
-        async function getCurrentLocation() {
+        let subscription;
+
+        async function subscribe() {
             let { status } = await Location.requestForegroundPermissionsAsync();
+
             if (status !== 'granted') {
-                setErrorMsg('Permission to access location was denied');
+                setErrorMsg(t('location.denied'));
                 return;
             }
 
-            let currentLocation = await Location.getCurrentPositionAsync({});
-            setLocation(currentLocation);
+            subscription = await Location.watchPositionAsync(
+                { accuracy: Location.Accuracy.High, distanceInterval: 5 },
+                setLocation
+            );
         }
-        getCurrentLocation();
+        
+        subscribe();
+        return () => {
+            if (subscription) subscription.remove();
+        };
     }, []);
 
     return { location, errorMsg };

@@ -1,12 +1,21 @@
+import { useEffect } from 'react';
+import { View, Text, TextInput, Button, TouchableOpacity, Alert } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
-import useLocationData from "../functions/useLocationData";
-import { View, Text, TextInput, Button, Image, TouchableOpacity, Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
+import useLocationData from "../functions/useLocationData";
+
+import UploadedImageDisplay from "../components/UploadedImageDisplay";
+
+import { useTranslation } from 'react-i18next';
+
 const ReviewScreen = () => {
-    const route = useRoute();
     const navigation = useNavigation();
+    const route = useRoute();
     const { location } = route.params || {};
+
+    const { t } = useTranslation();
+    
     const { review, setReview, like, setLike, photoUri, setPhotoUri, saveFeedback } = useLocationData(location?.id);
 
     const handleLike = () => {
@@ -30,29 +39,45 @@ const ReviewScreen = () => {
 
     const handleSave = () => {
         saveFeedback(review, like, photoUri);
-        Alert.alert('Gelukt', 'De review is succesvol opgeslagen!');
-        navigation.navigate('LocationScreen', { location: location, fromReview: true })
+        Alert.alert(t('generic.success'), t('review.saved'));
+        navigation.navigate('LocationScreen', { location: location, fromReview: true });
     };
+
+    useEffect(() => {
+            if (location?.name) {
+                navigation.setOptions({ title: t('header.review_location') + location.name });
+            }
+        }, [navigation, location?.name]);
 
     return (
         <View>
+
             <Text>{location?.name}</Text>
+
             <TouchableOpacity onPress={handleLike}>
-                <Text>{like ? '❤️' : '🤍'} Like</Text>
+
+                <Text>{like ? t('generic.like') : t('generic.like_empty')}</Text>
+
             </TouchableOpacity>
+
             <TextInput
-                placeholder="Schrijf een review..."
+                placeholder={t('review.placeholder')}
                 value={review}
                 onChangeText={handleReviewChange}
                 multiline
             />
-            <Button title="Foto toevoegen" onPress={pickImage}/>
-            {photoUri ? (
-                <Image source={{ uri: photoUri }} style={{ width: 200, height: 200, marginTop: 10 }}/>
-            ) : null}
-            <Button title="Opslaan" onPress={handleSave}/>
+
+            <Button title={t('review.photo')} onPress={pickImage}/>
+
+            <UploadedImageDisplay
+                uri={photoUri}
+                style={{ width: 200, height: 200, marginVertical: 10 }}
+            />
+
+            <Button title={t('button.save')} onPress={handleSave}/>
+
         </View>
     );
-}
+};
 
-export default ReviewScreen
+export default ReviewScreen;

@@ -1,13 +1,13 @@
+import { View, FlatList } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, FlatList, Pressable } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 
-import { styles } from '../css/styles.js';
-import { useTranslation } from 'react-i18next';
 import { useDataFetching } from '../initialization/DataFetching.js';
+import PressableText from '../components/PressableText.jsx';
+
+import { styles } from '../css/styles.js';
 
 const ListScreen = () => {
-  const { t } = useTranslation();
   const locations = useDataFetching();
   const navigation = useNavigation();
 
@@ -16,11 +16,10 @@ const ListScreen = () => {
   );
 
   const renderLocation = ({item}) => (
-      <View>
-          <Pressable onPress={() => navigation.navigate('LocationScreen', { location: item })}>
-              <Text>{item.name}</Text>
-          </Pressable>
-      </View>
+    <PressableText
+      text={item.name}
+      onPress={() => navigation.navigate('LocationScreen', { location: item })}
+    />
   );
 
   return (

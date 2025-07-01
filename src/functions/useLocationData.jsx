@@ -8,8 +8,10 @@ export default function useLocationData(locationId) {
 
     useEffect(() => {
         if (!locationId) return;
+
         (async () => {
             const data  = await AsyncStorage.getItem(`feedback_${locationId}`);
+
             if (data) {
                 const parsed = JSON.parse(data);
                 setReview(parsed.review || '');
@@ -23,6 +25,7 @@ export default function useLocationData(locationId) {
         setReview(newReview);
         setLike(newLike);
         setPhotoUri(newPhotoUri);
+
         await AsyncStorage.setItem(
             `feedback_${locationId}`,
             JSON.stringify({
