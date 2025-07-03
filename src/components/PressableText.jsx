@@ -1,9 +1,9 @@
 import { View, Pressable, Text } from "react-native";
 
-const PressableText = ({ text, onPress }) => (
-    <View>
+const PressableText = ({ text, onPress, style, textStyle }) => (
+    <View style={style}>
         <Pressable onPress={onPress}>
-            <Text>{text}</Text>
+            <Text style={textStyle}>{text}</Text>
         </Pressable>
     </View>
 );

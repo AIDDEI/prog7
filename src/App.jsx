@@ -1,11 +1,18 @@
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
+
 import BottomTabs from './navigation/BottomTabs';
+import { ThemeProvider } from './css/ThemeContext';
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <BottomTabs/>
-    </NavigationContainer>
+    <SafeAreaProvider>
+      <ThemeProvider>
+        <NavigationContainer>
+          <BottomTabs/>
+        </NavigationContainer>
+      </ThemeProvider>
+    </SafeAreaProvider>
   );
 };
 
