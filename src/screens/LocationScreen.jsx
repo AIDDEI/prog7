@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { Alert, Share, ScrollView, Text, Linking, View } from 'react-native';
+import { Alert, Share, ScrollView, Text, Linking, View, Dimensions } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -22,6 +22,9 @@ const LocationScreen = () => {
     const styles = createStyles(theme);
 
     const { t } = useTranslation();
+
+    const sectionWidth = Dimensions.get('window').width - 32;
+    const sectionHeight = sectionWidth * 2 / 3;
 
     const [review, setReview] = useState('');
     const [like, setLike] = useState(false);
@@ -122,14 +125,11 @@ const LocationScreen = () => {
             </View>
 
             {photoUri && (
-                <View style={[styles.section, { alignItems: 'center' }]}>
-
-                    <UploadedImageDisplay
-                        uri={photoUri}
-                        style={{ width: 200, height: 200, marginVertical: 10 }}
-                    />
-
-                </View>
+                <UploadedImageDisplay
+                    uri={photoUri}
+                    width={sectionWidth}
+                    height={sectionHeight}
+                />
             )}
 
             {error && (

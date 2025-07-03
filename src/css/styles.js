@@ -154,4 +154,9 @@ export const createStyles = (theme) => StyleSheet.create({
         fontWeight: 'bold',
         letterSpacing: 0.5,
     },
+    image: {
+        marginBottom: 18,
+        alignSelf: 'center',
+        borderRadius: 10,
+    },
 });

@@ -1,12 +1,15 @@
-import { useEffect } from 'react';
-import { View, Text, TextInput, Button, TouchableOpacity, Alert } from "react-native";
+import { useEffect, useContext } from 'react';
+import { View, Text, TextInput, Alert, ScrollView, TouchableOpacity, Dimensions } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 
 import useLocationData from "../functions/useLocationData";
 
 import UploadedImageDisplay from "../components/UploadedImageDisplay";
+import AppButton from '../components/AppButton';
 
+import { ThemeContext } from '../css/ThemeContext';
+import { createStyles } from '../css/styles';
 import { useTranslation } from 'react-i18next';
 
 const ReviewScreen = () => {
@@ -14,7 +17,13 @@ const ReviewScreen = () => {
     const route = useRoute();
     const { location } = route.params || {};
 
+    const { theme } = useContext(ThemeContext);
+    const styles = createStyles(theme);
+
     const { t } = useTranslation();
+
+    const sectionWidth = Dimensions.get('window').width - 32;
+    const sectionHeight = sectionWidth * 2 / 3;
     
     const { review, setReview, like, setLike, photoUri, setPhotoUri, saveFeedback } = useLocationData(location?.id);
 
@@ -30,6 +39,7 @@ const ReviewScreen = () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ['images'],
             allowsEditing: true,
+            aspect: [3, 2],
             quality: 0.5,
         });
         if (!result.canceled && result.assets && result.assets.length > 0) {
@@ -50,33 +60,45 @@ const ReviewScreen = () => {
         }, [navigation, location?.name]);
 
     return (
-        <View>
+        <ScrollView style={styles.container}>
 
-            <Text>{location?.name}</Text>
+            <View style={styles.titleRow}>
+                <View style={{ flex: 1 }}>
+                    <Text style={styles.title}>{location?.name}</Text>
+                    {location?.type && (
+                        <Text style={styles.subtitle}>{location.type}</Text>
+                    )}
+                </View>
+                <TouchableOpacity onPress={handleLike}>
+                    <Text style={styles.likeIcon}>{like ? t('generic.like') : t('generic.like_empty')}</Text>
+                </TouchableOpacity>
+            </View>
 
-            <TouchableOpacity onPress={handleLike}>
+            <View style={styles.section}>
+                <Text style={styles.sectionTitle}>{t('review.your_review')}</Text>
+                <TextInput
+                    style={[styles.sectionContent, { minHeight: 80, backgroundColor: '#fff', borderRadius: 8, padding: 10, marginTop: 6 }]}
+                    placeholder={t('review.placeholder')}
+                    value={review}
+                    onChangeText={handleReviewChange}
+                    multiline
+                />
+            </View>
 
-                <Text>{like ? t('generic.like') : t('generic.like_empty')}</Text>
-
-            </TouchableOpacity>
-
-            <TextInput
-                placeholder={t('review.placeholder')}
-                value={review}
-                onChangeText={handleReviewChange}
-                multiline
-            />
-
-            <Button title={t('review.photo')} onPress={pickImage}/>
+            <View style={styles.section}>
+                <Text style={styles.sectionTitle}>{t('review.photo')}</Text>
+                <AppButton title={t('review.addPhoto')} onPress={pickImage}/>
+            </View>
 
             <UploadedImageDisplay
                 uri={photoUri}
-                style={{ width: 200, height: 200, marginVertical: 10 }}
+                width={sectionWidth}
+                height={sectionHeight}
             />
 
-            <Button title={t('button.save')} onPress={handleSave}/>
+            <AppButton title={t('button.save')} onPress={handleSave}/>
 
-        </View>
+        </ScrollView>
     );
 };
 

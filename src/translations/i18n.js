@@ -67,7 +67,9 @@ i18next
                     review: {
                         saved: "The review has been saved successfully!",
                         placeholder: "Write a review...",
-                        photo: "Add photo",
+                        addPhoto: "Add photo",
+                        photo: "Your photo",
+                        your_review: "Your review",
                     },
                     settings: {
                         language: "Language",
