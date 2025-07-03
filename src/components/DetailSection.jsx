@@ -1,12 +1,22 @@
+import { useContext } from 'react';
 import { View, Text } from 'react-native';
 
-const DetailSection = ({ title, information }) => (
-    information ? (
-        <View>
-            <Text>{title}</Text>
-            <Text>{information}</Text>
+import { ThemeContext } from '../css/ThemeContext';
+import { createStyles } from '../css/styles';
+
+const DetailSection = ({ title, information, children }) => {
+    const { theme } = useContext(ThemeContext);
+    const styles = createStyles(theme);
+
+    if (!information && !children) return null;
+
+    return (
+        <View style={styles.section}>
+            <Text style={styles.sectionTitle}>{title}</Text>
+            {information && <Text style={styles.sectionContent}>{information}</Text>}
+            {children}
         </View>
-    ) : null
-);
+    );
+};
 
 export default DetailSection;

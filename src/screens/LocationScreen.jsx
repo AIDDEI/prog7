@@ -1,12 +1,15 @@
-import { useState, useEffect } from 'react';
-import { View, Text, Button, Alert, Share } from 'react-native';
+import { useState, useEffect, useContext } from 'react';
+import { ScrollView, Text, Button, Linking, View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import DetailSection from '../components/DetailSection';
 import LikeIcon from '../components/LikeIcon';
 import UploadedImageDisplay from '../components/UploadedImageDisplay';
+import OpeningHours from '../components/OpeningHours.jsx';
 
+import { ThemeContext } from '../css/ThemeContext.jsx';
+import { createStyles } from '../css/styles.js';
 import { useTranslation } from 'react-i18next';
 
 const LocationScreen = () => {
@@ -14,12 +17,25 @@ const LocationScreen = () => {
     const route = useRoute();
     const { location, fromReview } = route.params || {};
 
+    const { theme } = useContext(ThemeContext);
+    const styles = createStyles(theme);
+
     const { t } = useTranslation();
 
     const [review, setReview] = useState('');
     const [like, setLike] = useState(false);
     const [photoUri, setPhotoUri] = useState(null);
     const [error, setError] = useState(null);
+
+    const addressString = location?.address
+        ? `${location.address.street} ${location.address.house_number}, ${location.address.postal_code} ${location.address.city}`
+        : '';
+
+    const openWebsite = () => {
+        if (location?.website) {
+            Linking.openURL(location.website);
+        }
+    };
 
     const handleDeleteReview = async () => {
         try {
@@ -92,59 +108,107 @@ const LocationScreen = () => {
     }, [navigation, location?.name]);
 
     return (
-        <View>
+        <ScrollView style={styles.container}>
 
-            <Text>{location?.name}</Text>
+            <Text style={styles.title}>{location?.name}</Text>
+
+            <DetailSection
+                title={t('generic.type') + ":"}
+                information={location?.type}
+            />
+
+            <DetailSection
+                title={t('generic.address') + ":"}
+                information={addressString}
+            />
+
+            <DetailSection
+                title={t('generic.website') + ":"}
+            >
+
+                {location?.website && (
+                    <Text style={styles.website} onPress={openWebsite}>
+                        {location.website}
+                    </Text>
+                )}
+
+            </DetailSection>
+
+            <OpeningHours openingHours={location?.opening_hours}/>
+
+            <DetailSection
+                title={t('generic.music') + ":"}
+            >
+
+                {location?.music && Array.isArray(location.music) && (
+                    <View style={styles.musicList}>
+                        {location.music.map((musicStyle, idx) => (
+                            <Text style={styles.musicItem} key={idx}>{musicStyle}</Text>
+                        ))}
+                    </View>
+                )}
+
+            </DetailSection>
 
             <DetailSection
                 title={t('generic.description') + ":"}
                 information={location?.description}
             />
 
-            {error && (
-                <Text style={{ color: 'red', marginVertical: 10 }}>{error}</Text>
-            )}
-            
             <DetailSection
                 title={t('generic.review') + ":"}
                 information={review}
             />
 
-            <LikeIcon liked={like}/>
+            {(like || photoUri) && (
+                <View style={[styles.section, { alignItems: 'center' }]}>
 
-            <UploadedImageDisplay
-                uri={photoUri}
-                style={{ width: 200, height: 200, marginVertical: 10 }}
-            />
+                    <LikeIcon liked={like}/>
 
-            <Button
-                title={t('button.map')}
-                onPress={() => 
-                    navigation.navigate('Map', {
-                        latitude: location?.latitude,
-                        longitude: location?.longitude,
-                        name: location?.name,
-                    })
-                }
-            />
+                    <UploadedImageDisplay
+                        uri={photoUri}
+                        style={{ width: 200, height: 200, marginVertical: 10 }}
+                    />
 
-            <Button
-                title={review ? t('button.edit_review') : t('button.review')}
-                onPress={() => navigation.navigate('ReviewScreen', { location })}
-            />
+                </View>
+            )}
 
-            <Button
-                title={t('button.delete_review')}
-                color="red"
-                onPress={handleDeleteReview}
-            />
+            {error && (
+                <Text style={{ color: 'red', marginVertical: 10 }}>{error}</Text>
+            )}
 
-            <Button
-                title={t('button.share')}
-                onPress={handleShare}
-            />
+            <View style={styles.buttonRow}>
 
-        </View>
+                <Button
+                    title={t('button.map')}
+                    onPress={() =>
+                        navigation.navigate('Map', {
+                            latitude: location?.latitude,
+                            longitude: location?.longitude,
+                            name: location?.name,
+                        })
+                    }
+                />
+
+                <Button
+                    title={review ? t('button.edit_review') : t('button.review')}
+                    onPress={() => navigation.navigate('ReviewScreen', { location })}
+                />
+
+                <Button
+                    title={t('button.delete_review')}
+                    color="red"
+                    onPress={handleDeleteReview}
+                />
+
+                <Button
+                    title={t('button.share')}
+                    onPress={handleShare}
+                />
+
+            </View>
+
+        </ScrollView>
     );
 };
 

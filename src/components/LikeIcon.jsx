@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next';
 
 const LikeIcon = ({ liked }) => {
     const { t } = useTranslation();
-    liked ? (
+
+    return liked ? (
         <View>
             <Text>{ t('generic.like') }</Text>
         </View>
