@@ -25,8 +25,25 @@ export const createStyles = (theme) => StyleSheet.create({
         fontSize: 28,
         fontWeight: 'bold',
         color: theme.text,
+        marginTop: 20,
+    },
+    subtitle: {
+        fontsize: 16,
+        color: '#888',
+        marginTop: -8,
         marginBottom: 10,
-        textAlign: 'center',
+        marginLeft: 1,
+        fontWeight: '600',
+    },
+    titleRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: 20,
+    },
+    likeIcon: {
+        fontSize: 35,
+        marginTop: 15,
     },
     section: {
         marginBottom: 18,
@@ -76,9 +93,10 @@ export const createStyles = (theme) => StyleSheet.create({
     },
     buttonRow: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginTop: 18,
         gap: 10,
+    },
+    buttonRowButton: {
+        flex: 1,
     },
     listItem: {
         backgroundColor: '#f5f5f5',
@@ -118,5 +136,22 @@ export const createStyles = (theme) => StyleSheet.create({
     openingHoursTime: {
         color: theme.text,
         fontSize: 15,
+    },
+    appButton: {
+        backgroundColor: '#2196F3',
+        paddingVertical: 14,
+        borderRadius: 8,
+        alignItems: 'center',
+        marginBottom: 18,
+        shadowColor: '#000',
+        shadowOpacity: 0.08,
+        shadowRadius: 4,
+        elevation: 2,
+    },
+    appButtonText: {
+        color: '#fff',
+        fontSize: 17,
+        fontWeight: 'bold',
+        letterSpacing: 0.5,
     },
 });

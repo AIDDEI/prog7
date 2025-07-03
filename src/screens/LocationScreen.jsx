@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { ScrollView, Text, Button, Linking, View } from 'react-native';
+import { Alert, Share, ScrollView, Text, Linking, View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -7,6 +7,7 @@ import DetailSection from '../components/DetailSection';
 import LikeIcon from '../components/LikeIcon';
 import UploadedImageDisplay from '../components/UploadedImageDisplay';
 import OpeningHours from '../components/OpeningHours.jsx';
+import AppButton from '../components/AppButton.jsx';
 
 import { ThemeContext } from '../css/ThemeContext.jsx';
 import { createStyles } from '../css/styles.js';
@@ -110,31 +111,35 @@ const LocationScreen = () => {
     return (
         <ScrollView style={styles.container}>
 
-            <Text style={styles.title}>{location?.name}</Text>
+            <View style={styles.titleRow}>
+                <View style={{ flex: 1 }}>
+                    <Text style={styles.title}>{location?.name}</Text>
+                    {location?.type && (
+                        <Text style={styles.subtitle}>{location.type}</Text>
+                    )}
+                </View>
+                {like && <LikeIcon liked={like}/>}
+            </View>
+
+            {photoUri && (
+                <View style={[styles.section, { alignItems: 'center' }]}>
+
+                    <UploadedImageDisplay
+                        uri={photoUri}
+                        style={{ width: 200, height: 200, marginVertical: 10 }}
+                    />
+
+                </View>
+            )}
+
+            {error && (
+                <Text style={{ color: 'red', marginVertical: 10 }}>{error}</Text>
+            )}
 
             <DetailSection
-                title={t('generic.type') + ":"}
-                information={location?.type}
+                title={t('generic.description') + ":"}
+                information={location?.description}
             />
-
-            <DetailSection
-                title={t('generic.address') + ":"}
-                information={addressString}
-            />
-
-            <DetailSection
-                title={t('generic.website') + ":"}
-            >
-
-                {location?.website && (
-                    <Text style={styles.website} onPress={openWebsite}>
-                        {location.website}
-                    </Text>
-                )}
-
-            </DetailSection>
-
-            <OpeningHours openingHours={location?.opening_hours}/>
 
             <DetailSection
                 title={t('generic.music') + ":"}
@@ -150,9 +155,15 @@ const LocationScreen = () => {
 
             </DetailSection>
 
-            <DetailSection
-                title={t('generic.description') + ":"}
-                information={location?.description}
+            <AppButton
+                title={t('button.map')}
+                onPress={() =>
+                    navigation.navigate('Map', {
+                        latitude: location?.latitude,
+                        longitude: location?.longitude,
+                        name: location?.name,
+                    })
+                }
             />
 
             <DetailSection
@@ -160,53 +171,52 @@ const LocationScreen = () => {
                 information={review}
             />
 
-            {(like || photoUri) && (
-                <View style={[styles.section, { alignItems: 'center' }]}>
-
-                    <LikeIcon liked={like}/>
-
-                    <UploadedImageDisplay
-                        uri={photoUri}
-                        style={{ width: 200, height: 200, marginVertical: 10 }}
-                    />
-
-                </View>
-            )}
-
-            {error && (
-                <Text style={{ color: 'red', marginVertical: 10 }}>{error}</Text>
-            )}
-
             <View style={styles.buttonRow}>
 
-                <Button
-                    title={t('button.map')}
-                    onPress={() =>
-                        navigation.navigate('Map', {
-                            latitude: location?.latitude,
-                            longitude: location?.longitude,
-                            name: location?.name,
-                        })
+                <AppButton
+                    title={
+                        (!!review || !!photoUri || !!like)
+                            ? t('button.edit_review')
+                            : t('button.review')
                     }
-                />
-
-                <Button
-                    title={review ? t('button.edit_review') : t('button.review')}
                     onPress={() => navigation.navigate('ReviewScreen', { location })}
+                    style={styles.buttonRowButton}
                 />
 
-                <Button
-                    title={t('button.delete_review')}
-                    color="red"
-                    onPress={handleDeleteReview}
-                />
-
-                <Button
-                    title={t('button.share')}
-                    onPress={handleShare}
-                />
+                {(!!review || !!photoUri || !!like) && (
+                    <AppButton
+                        title={t('button.delete_review')}
+                        onPress={handleDeleteReview}
+                        color="red"
+                        style={styles.buttonRowButton}
+                    />
+                )}
 
             </View>
+
+            <DetailSection
+                title={t('generic.address') + ":"}
+                information={addressString}
+            />
+
+            <OpeningHours openingHours={location?.opening_hours}/>
+
+            <DetailSection
+                title={t('generic.website') + ":"}
+            >
+
+                {location?.website && (
+                    <Text style={styles.website} onPress={openWebsite}>
+                        {location.website}
+                    </Text>
+                )}
+
+            </DetailSection>
+
+            <AppButton
+                title={t('button.share')}
+                onPress={handleShare}
+            />
 
         </ScrollView>
     );

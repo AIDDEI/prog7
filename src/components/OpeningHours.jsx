@@ -1,5 +1,5 @@
-import { View, Text } from "react-native";
 import { useContext } from "react";
+import { View, Text } from "react-native";
 
 import { ThemeContext } from "../css/ThemeContext";
 import { createStyles } from "../css/styles";
