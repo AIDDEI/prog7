@@ -2,11 +2,11 @@ import { useContext } from 'react';
 import { View, FlatList } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 
-import { useDataFetching } from '../initialization/DataFetching.js';
-import PressableText from '../components/PressableText.jsx';
-
 import { ThemeContext } from '../css/ThemeContext.jsx';
 import { createStyles } from '../css/styles.js';
+
+import { useDataFetching } from '../initialization/DataFetching.js';
+import PressableText from '../components/PressableText.jsx';
 
 const ListScreen = () => {
   const locations = useDataFetching();

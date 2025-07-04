@@ -1,9 +1,17 @@
+import { useContext } from 'react';
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { ThemeContext } from '../css/ThemeContext';
+import { createStyles } from '../css/styles';
 import { useTranslation } from 'react-i18next';
 
+import PressableText from '../components/PressableText.jsx';
+
 const LanguageScreen = () => {
+  const { theme } = useContext(ThemeContext);
+  const styles = createStyles(theme);
+
   const { i18n, t } = useTranslation();
   
   const LANGUAGES = [
@@ -19,21 +27,24 @@ const LanguageScreen = () => {
     await AsyncStorage.setItem('appLanguage', code);
   };
 
-  return (
-    <View>
+  const renderLanguage = ({ item }) => (
+    <PressableText
+      text={item.label}
+      onPress={() => setLanguage(item.code)}
+      style={styles.listItem}
+      textStyle={styles.ListItemText}
+    />
+  );
 
-        <Text>{t('settings.set_language')}</Text>
+  return (
+    <View style={styles.container}>
+
+        <Text style={styles.title}>{t('settings.set_language')}</Text>
 
         <FlatList
             data={LANGUAGES}
+            renderItem={renderLanguage}
             keyExtractor={item => item.code}
-            renderItem={({ item }) => (
-                <TouchableOpacity
-                    onPress={() => setLanguage(item.code)}
-                >
-                    <Text>{item.label}</Text>
-                </TouchableOpacity>
-            )}
         />
 
     </View>

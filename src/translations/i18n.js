@@ -75,6 +75,7 @@ i18next
                         language: "Language",
                         theme: "Theme",
                         set_language: "Select language",
+                        set_theme: "Select theme",
                     },
                     language: {
                         dutch: "Nederlands (Dutch)",
@@ -82,6 +83,11 @@ i18next
                         german: "Deutsch (German)",
                         spanish: "Español (Spanish)",
                         chinese: "中国人 (Chinese)",
+                    },
+                    themes: {
+                        light: "Light Theme",
+                        dark: "Dark Theme",
+                        retro: "Retro Theme",
                     },
                 }
             },
@@ -150,6 +156,7 @@ i18next
                         language: "Taal",
                         theme: "Thema",
                         set_language: "Selecteer taal",
+                        set_theme: "Selecteer thema",
                     },
                     language: {
                         dutch: "Nederlands",
@@ -157,6 +164,11 @@ i18next
                         german: "Deutsch (Duits)",
                         spanish: "Español (Spaans)",
                         chinese: "中国人 (Chinees)",
+                    },
+                    themes: {
+                        light: "Licht Thema",
+                        dark: "Donker Thema",
+                        retro: "Retro Thema",
                     },
                 }
             },
@@ -225,6 +237,7 @@ i18next
                         language: "Sprache",
                         theme: "Thema",
                         set_language: "Sprache auswählen",
+                        set_theme: "Thema auswählen",
                     },
                     language: {
                         dutch: "Nederlands (Niederländisch)",
@@ -232,6 +245,11 @@ i18next
                         german: "Deutsch",
                         spanish: "Español (Spanisch)",
                         chinese: "中国人 (Chinesisch)",
+                    },
+                    themes: {
+                        light: "Helles Design",
+                        dark: "Dunkles Design",
+                        retro: "Retro-Design",
                     },
                 }
             },
@@ -300,6 +318,7 @@ i18next
                         language: "Idioma",
                         theme: "Tema",
                         set_language: "Seleccionar idioma",
+                        set_theme: "Seleccionar tema",
                     },
                     language: {
                         dutch: "Nederlands (Holandés)",
@@ -307,6 +326,11 @@ i18next
                         german: "Deutsch (Alemán)",
                         spanish: "Español",
                         chinese: "中国人 (Chino)",
+                    },
+                    themes: {
+                        light: "Tema Claro",
+                        dark: "Tema Oscuro",
+                        retro: "Tema Retro",
                     },
                 }
             },
@@ -375,6 +399,7 @@ i18next
                         language: "语言",
                         theme: "主题",
                         set_language: "选择语言",
+                        set_theme: "选择主题",
                     },
                     language: {
                         dutch: "Nederlands (荷兰语)",
@@ -382,6 +407,11 @@ i18next
                         german: "Deutsch (德语)",
                         spanish: "Español (西班牙语)",
                         chinese: "中国人",
+                    },
+                    themes: {
+                        light: "浅色主题",
+                        dark: "深色主题",
+                        retro: "复古主题",
                     },
                 }
             }
