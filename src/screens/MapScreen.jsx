@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { View, Text, Image, Pressable } from "react-native";
-import MapView, { Marker, Callout } from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import { useRoute, useFocusEffect } from '@react-navigation/native';
 
 import { useDataFetching } from "../initialization/DataFetching";
@@ -134,10 +134,12 @@ const MapScreen = () => {
             description={location.address.street + ' ' + location.address.house_number}
           >
 
-            <UploadedImageDisplay
-              uri={markerPhotos[location.id]}
-              style={{ width: 40, height: 40, borderRadius: 20, borderWidth: 2, borderColor: '#fff' }}
-            />
+            {markerPhotos[location.id] && (
+              <Image
+                source={{ uri: markerPhotos[location.id] }}
+                style={[styles.image, { width: 40, height: 40 }]}
+              />
+            )}
 
           </Marker>
         ))}
