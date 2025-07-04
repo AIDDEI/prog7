@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { View, Text } from "react-native";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import { View, Text, Image, Pressable } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { useRoute, useFocusEffect } from '@react-navigation/native';
 
@@ -11,11 +11,17 @@ import UploadedImageDisplay from "../components/UploadedImageDisplay";
 import UserMarker from "../components/UserMarker";
 import PressableText from "../components/PressableText";
 
-import ligthModeStyle from "../mapStyles/lightMode.json";
+import { ThemeContext } from "../css/ThemeContext";
+import { createStyles } from "../css/styles";
 import { useTranslation } from 'react-i18next';
+
+import ligthModeStyle from "../mapStyles/lightMode.json";
 
 const MapScreen = () => {
   const route = useRoute();
+
+  const { themeName, theme } = useContext(ThemeContext);
+  const styles = createStyles(theme);
 
   const { t } = useTranslation();
 
@@ -37,6 +43,15 @@ const MapScreen = () => {
       });
     }
   };
+
+  let locationIcon;
+  if (themeName === "dark") {
+    locationIcon = require("../../assets/location_dark.png");
+  } else if (themeName === "retro") {
+    locationIcon = require("../../assets/location_retro.png");
+  } else {
+    locationIcon = require("../../assets/location_light.png");
+  }
 
   useFocusEffect(
     React.useCallback(() => {
@@ -125,10 +140,19 @@ const MapScreen = () => {
 
       </MapView>
 
-      <PressableText
-        text={t('location.current')}
+      <Pressable
+        style={[
+          styles.myLocation,
+          { backgroundColor: theme.background }
+        ]}
         onPress={centerOnCurrentLocation}
-      />
+      >
+        <Image
+          source={locationIcon}
+          style={styles.myLocationIcon}
+          resizeMode="contain"
+        />
+      </Pressable>
 
     </View>
     
