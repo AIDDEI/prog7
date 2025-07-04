@@ -56,30 +56,30 @@ const BottomTabs = () => {
         >
             <Tab.Screen name="List" component={ListStack} options={{
                 headerShown: false,
-                tabBarIcon: () => (
+                tabBarIcon: ({ focused }) => (
                     <Image
                         source={listIcon}
-                        style={{ width: 28, height: 28 }}
+                        style={{ width: 28, height: 28, opacity: focused ? 1 : 0.5 }}
                         resizeMode="contain"
                     />
                 )}}
             />
             <Tab.Screen name="Map" component={MapScreen} options={{
                 title: t('header.map'),
-                tabBarIcon: () => (
+                tabBarIcon: ({ focused }) => (
                     <Image
                         source={mapIcon}
-                        style={{ width: 28, height: 28 }}
+                        style={{ width: 28, height: 28, opacity: focused ? 1 : 0.5 }}
                         resizeMode="contain"
                     />
                 )}}
             />
             <Tab.Screen name="SettingsTab" component={SettingsStack} options={{
                 headerShown: false,
-                tabBarIcon: () => (
+                tabBarIcon: ({ focused }) => (
                     <Image
                         source={settingsIcon}
-                        style={{ width: 28, height: 28 }}
+                        style={{ width: 28, height: 28, opacity: focused ? 1 : 0.5 }}
                         resizeMode="contain"
                     />
                 )}}
