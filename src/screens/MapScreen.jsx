@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { View, Text, Image, Pressable } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, Callout } from "react-native-maps";
 import { useRoute, useFocusEffect } from '@react-navigation/native';
 
 import { useDataFetching } from "../initialization/DataFetching";
@@ -9,13 +9,14 @@ import loadMarkerPhotos from "../functions/loadMarkerPhotos";
 
 import UploadedImageDisplay from "../components/UploadedImageDisplay";
 import UserMarker from "../components/UserMarker";
-import PressableText from "../components/PressableText";
 
 import { ThemeContext } from "../css/ThemeContext";
 import { createStyles } from "../css/styles";
 import { useTranslation } from 'react-i18next';
 
 import ligthModeStyle from "../mapStyles/lightMode.json";
+import darkModeStyle from "../mapStyles/darkMode.json";
+import retroModeStyle from "../mapStyles/retroMode.json";
 
 const MapScreen = () => {
   const route = useRoute();
@@ -43,6 +44,15 @@ const MapScreen = () => {
       });
     }
   };
+
+  let mapStyle;
+  if (themeName === "dark") {
+    mapStyle = darkModeStyle;
+  } else if (themeName === "retro") {
+    mapStyle = retroModeStyle;
+  } else {
+    mapStyle = ligthModeStyle;
+  }
 
   let locationIcon;
   if (themeName === "dark") {
@@ -107,7 +117,7 @@ const MapScreen = () => {
           latitudeDelta: 0.002,
           longitudeDelta: 0.002,
         }}
-        customMapStyle={ligthModeStyle}
+        customMapStyle={mapStyle}
       >
 
         {locations.map((location) => (
@@ -121,7 +131,7 @@ const MapScreen = () => {
               longitude: location.longitude,
             }}
             title={location.name}
-            description={location.description}
+            description={location.address.street + ' ' + location.address.house_number}
           >
 
             <UploadedImageDisplay
