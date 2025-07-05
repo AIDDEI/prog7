@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "prog7",
-    "slug": "prog7",
+    "name": "NachtKompas",
+    "slug": "NachtKompas",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
