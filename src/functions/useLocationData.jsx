@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function useLocationData(locationId) {
@@ -10,7 +10,7 @@ export default function useLocationData(locationId) {
         if (!locationId) return;
 
         (async () => {
-            const data  = await AsyncStorage.getItem(`feedback_${locationId}`);
+            const data = await AsyncStorage.getItem(`feedback_${locationId}`);
 
             if (data) {
                 const parsed = JSON.parse(data);
@@ -35,6 +35,4 @@ export default function useLocationData(locationId) {
             })
         );
     };
-
-    return { review, setReview, like, setLike, photoUri, setPhotoUri, saveFeedback };
 }
