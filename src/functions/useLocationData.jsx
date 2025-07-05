@@ -35,4 +35,6 @@ export default function useLocationData(locationId) {
             })
         );
     };
+
+    return { review, setReview, like, setLike, photoUri, setPhotoUri, saveFeedback };
 }
