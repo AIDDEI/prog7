@@ -15,7 +15,6 @@ const ThemeScreen = () => {
 
     return (
         <View style={styles.container}>
-
             <Text style={styles.title}>{t('settings.set_theme')}</Text>
 
             <AppButton
@@ -36,7 +35,6 @@ const ThemeScreen = () => {
                 onPress={() => changeTheme("retro")}
                 color={themeName === "retro" ? theme.buttonSelected : undefined}
             />
-
         </View>
     );
 }

@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { ThemeContext } from '../css/ThemeContext';
@@ -13,7 +13,7 @@ const LanguageScreen = () => {
   const styles = createStyles(theme);
 
   const { i18n, t } = useTranslation();
-  
+
   const LANGUAGES = [
     { code: "en", label: t('language.english') },
     { code: "nl", label: t('language.dutch') },
@@ -38,15 +38,12 @@ const LanguageScreen = () => {
 
   return (
     <View style={styles.container}>
-
-        <Text style={styles.title}>{t('settings.set_language')}</Text>
-
-        <FlatList
-            data={LANGUAGES}
-            renderItem={renderLanguage}
-            keyExtractor={item => item.code}
-        />
-
+      <Text style={styles.title}>{t('settings.set_language')}</Text>
+      <FlatList
+        data={LANGUAGES}
+        renderItem={renderLanguage}
+        keyExtractor={item => item.code}
+      />
     </View>
   );
 }

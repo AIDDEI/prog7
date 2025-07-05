@@ -9,7 +9,7 @@ const App = () => {
     <SafeAreaProvider>
       <ThemeProvider>
         <NavigationContainer>
-          <BottomTabs/>
+          <BottomTabs />
         </NavigationContainer>
       </ThemeProvider>
     </SafeAreaProvider>

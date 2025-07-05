@@ -7,7 +7,6 @@ import { useDataFetching } from "../initialization/DataFetching";
 import useCurrentLocation from "../functions/useCurrentLocation";
 import loadMarkerPhotos from "../functions/loadMarkerPhotos";
 
-import UploadedImageDisplay from "../components/UploadedImageDisplay";
 import UserMarker from "../components/UserMarker";
 
 import { ThemeContext } from "../css/ThemeContext";
@@ -30,7 +29,7 @@ const MapScreen = () => {
 
   const locations = useDataFetching();
   const { location, errorMsg } = useCurrentLocation();
-  
+
   const markerRefs = useRef({});
   const [markerPhotos, setMarkerPhotos] = useState({});
 
@@ -107,7 +106,6 @@ const MapScreen = () => {
 
   return (
     <View style={{ flex: 1 }}>
-
       <MapView
         ref={mapRef}
         style={{ flex: 1 }}
@@ -119,7 +117,6 @@ const MapScreen = () => {
         }}
         customMapStyle={mapStyle}
       >
-
         {locations.map((location) => (
           <Marker
             key={location.id}
@@ -133,14 +130,12 @@ const MapScreen = () => {
             title={location.name}
             description={location.address.street + ' ' + location.address.house_number}
           >
-
             {markerPhotos[location.id] && (
               <Image
                 source={{ uri: markerPhotos[location.id] }}
                 style={[styles.image, { width: 40, height: 40 }]}
               />
             )}
-
           </Marker>
         ))}
 
@@ -149,7 +144,6 @@ const MapScreen = () => {
           color={"rgba(0, 122, 255, 0.8)"}
           borderColor={"white"}
         />
-
       </MapView>
 
       <Pressable
@@ -165,9 +159,7 @@ const MapScreen = () => {
           resizeMode="contain"
         />
       </Pressable>
-
     </View>
-    
   );
 };
 

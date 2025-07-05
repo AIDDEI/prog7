@@ -24,7 +24,7 @@ const ReviewScreen = () => {
 
     const sectionWidth = Dimensions.get('window').width - 32;
     const sectionHeight = sectionWidth * 2 / 3;
-    
+
     const { review, setReview, like, setLike, photoUri, setPhotoUri, saveFeedback } = useLocationData(location?.id);
 
     const handleLike = () => {
@@ -54,14 +54,13 @@ const ReviewScreen = () => {
     };
 
     useEffect(() => {
-            if (location?.name) {
-                navigation.setOptions({ title: t('header.review_location') + location.name });
-            }
-        }, [navigation, location?.name]);
+        if (location?.name) {
+            navigation.setOptions({ title: t('header.review_location') + location.name });
+        }
+    }, [navigation, location?.name]);
 
     return (
         <ScrollView style={styles.container}>
-
             <View style={styles.titleRow}>
                 <View style={{ flex: 1 }}>
                     <Text style={styles.title}>{location?.name}</Text>
@@ -87,7 +86,7 @@ const ReviewScreen = () => {
 
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>{t('review.photo')}</Text>
-                <AppButton title={t('review.addPhoto')} onPress={pickImage}/>
+                <AppButton title={t('review.addPhoto')} onPress={pickImage} />
             </View>
 
             <UploadedImageDisplay
@@ -96,7 +95,7 @@ const ReviewScreen = () => {
                 height={sectionHeight}
             />
 
-            <AppButton title={t('button.save')} onPress={handleSave}/>
+            <AppButton title={t('button.save')} onPress={handleSave} />
 
         </ScrollView>
     );

@@ -70,7 +70,7 @@ const LocationScreen = () => {
     };
 
     useEffect(() => {
-        if(!fromReview) return;
+        if (!fromReview) return;
 
         const unsubscribe = navigation.addListener('beforeRemove', (e) => {
             e.preventDefault();
@@ -113,7 +113,6 @@ const LocationScreen = () => {
 
     return (
         <ScrollView style={styles.container}>
-
             <View style={styles.titleRow}>
                 <View style={{ flex: 1 }}>
                     <Text style={styles.title}>{location?.name}</Text>
@@ -121,7 +120,7 @@ const LocationScreen = () => {
                         <Text style={styles.subtitle}>{location.type}</Text>
                     )}
                 </View>
-                {like && <LikeIcon liked={like}/>}
+                {like && <LikeIcon liked={like} />}
             </View>
 
             {photoUri && (
@@ -144,7 +143,6 @@ const LocationScreen = () => {
             <DetailSection
                 title={t('generic.music') + ":"}
             >
-
                 {location?.music && Array.isArray(location.music) && (
                     <View style={styles.musicList}>
                         {location.music.map((musicStyle, idx) => (
@@ -152,7 +150,6 @@ const LocationScreen = () => {
                         ))}
                     </View>
                 )}
-
             </DetailSection>
 
             <AppButton
@@ -172,7 +169,6 @@ const LocationScreen = () => {
             />
 
             <View style={styles.buttonRow}>
-
                 <AppButton
                     title={
                         (!!review || !!photoUri || !!like)
@@ -191,7 +187,6 @@ const LocationScreen = () => {
                         style={styles.buttonRowButton}
                     />
                 )}
-
             </View>
 
             <DetailSection
@@ -199,25 +194,22 @@ const LocationScreen = () => {
                 information={addressString}
             />
 
-            <OpeningHours openingHours={location?.opening_hours}/>
+            <OpeningHours openingHours={location?.opening_hours} />
 
             <DetailSection
                 title={t('generic.website') + ":"}
             >
-
                 {location?.website && (
                     <Text style={styles.website} onPress={openWebsite}>
                         {location.website}
                     </Text>
                 )}
-
             </DetailSection>
 
             <AppButton
                 title={t('button.share')}
                 onPress={handleShare}
             />
-
         </ScrollView>
     );
 };

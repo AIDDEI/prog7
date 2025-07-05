@@ -18,7 +18,6 @@ const SettingsScreen = () => {
 
   return (
     <View style={styles.container}>
-
       <AppButton
         title={t('settings.language')}
         onPress={() => navigation.navigate('Language')}
@@ -29,7 +28,6 @@ const SettingsScreen = () => {
         title={t('settings.theme')}
         onPress={() => navigation.navigate('Theme')}
       />
-
     </View>
   );
 };
