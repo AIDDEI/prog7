@@ -21,20 +21,20 @@ const ThemeScreen = () => {
             <AppButton
                 title={t('themes.light')}
                 onPress={() => changeTheme("light")}
-                color={themeName === "light" ? "#2196F3" : undefined}
+                color={themeName === "light" ? theme.buttonSelected : undefined}
                 style={{ marginTop: 18 }}
             />
 
             <AppButton
                 title={t('themes.dark')}
                 onPress={() => changeTheme("dark")}
-                color={themeName === "dark" ? "#2196F3" : undefined}
+                color={themeName === "dark" ? theme.buttonSelected : undefined}
             />
 
             <AppButton
                 title={t('themes.retro')}
                 onPress={() => changeTheme("retro")}
-                color={themeName === "retro" ? "#2196F3" : undefined}
+                color={themeName === "retro" ? theme.buttonSelected : undefined}
             />
 
         </View>

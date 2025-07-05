@@ -1,18 +1,39 @@
 import { StyleSheet } from "react-native";
 
 export const lightTheme = {
-    background: "#ffffff",
+    background: "#FFFFFF",
     text: "#000000",
+    inactive: "#808080",
+    section: "#F5F5F5",
+    button: "#2196F3",
+    buttonText: "#FFFFFF",
+    buttonSelected: "#114b7a",
+    music: "#E0E0E0",
+    musicText: "#333333",
 };
 
 export const darkTheme = {
     background: "#161616",
-    text: "#ffffff",
+    text: "#FFFFFF",
+    inactive: "#8A8A8A",
+    section: "#2D2D2D",
+    button: "#0A2D49",
+    buttonText: "#FFFFFF",
+    buttonSelected: "#051725",
+    music: "#333333",
+    musicText: "#E0E0E0",
 };
 
 export const retroTheme = {
     background: "#BDB398",
     text: "#4242E7",
+    inactive: "#807ABE",
+    section: "#EBE3CD",
+    button: "#C9B2A6",
+    buttonText: "#FFFCF1",
+    buttonSelected: "#655953",
+    music: "#C9B2A6",
+    musicText: "#FFFCF1",
 };
 
 export const createStyles = (theme) => StyleSheet.create({
@@ -47,7 +68,7 @@ export const createStyles = (theme) => StyleSheet.create({
     },
     section: {
         marginBottom: 18,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: theme.section,
         borderRadius: 10,
         padding: 14,
         shadowColor: '#000',
@@ -76,13 +97,13 @@ export const createStyles = (theme) => StyleSheet.create({
         marginTop: 4,
     },
     musicItem: {
-        backgroundColor: '#e0e0e0',
+        backgroundColor: theme.music,
         borderRadius: 12,
         paddingHorizontal: 10,
         paddingVertical: 4,
         marginRight: 8,
         marginBottom: 6,
-        color: '#333',
+        color: theme.musicText,
         fontSize: 13,
     },
     website: {
@@ -99,7 +120,7 @@ export const createStyles = (theme) => StyleSheet.create({
         flex: 1,
     },
     listItem: {
-        backgroundColor: '#f5f5f5',
+        backgroundColor: theme.section,
         padding: 16,
         borderRadius: 8,
         margin: 15,
@@ -114,7 +135,7 @@ export const createStyles = (theme) => StyleSheet.create({
     },
     openingHoursSection: {
         marginBottom: 18,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: theme.section,
         borderRadius: 10,
         padding: 14,
         shadowColor: '#000',
@@ -128,7 +149,7 @@ export const createStyles = (theme) => StyleSheet.create({
         marginBottom: 4,
     },
     openingHoursDay: {
-        color: '#666',
+        color: theme.text,
         fontWeight: 'bold',
         fontSize: 15,
         width: 110,
@@ -138,7 +159,7 @@ export const createStyles = (theme) => StyleSheet.create({
         fontSize: 15,
     },
     appButton: {
-        backgroundColor: '#2196F3',
+        backgroundColor: theme.button,
         paddingVertical: 14,
         borderRadius: 8,
         alignItems: 'center',
@@ -149,7 +170,7 @@ export const createStyles = (theme) => StyleSheet.create({
         elevation: 2,
     },
     appButtonText: {
-        color: '#fff',
+        color: theme.buttonText,
         fontSize: 17,
         fontWeight: 'bold',
         letterSpacing: 0.5,

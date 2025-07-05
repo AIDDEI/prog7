@@ -50,11 +50,12 @@ const BottomTabs = () => {
                 tabBarStyle: { backgroundColor: theme.background },
                 headerTintColor: theme.text,
                 tabBarActiveTintColor: theme.text,
-                tabBarInactiveTintColor: '#888',
+                tabBarInactiveTintColor: theme.inactive,
                 headerTitleStyle: { fontWeight: 'bold' },
             }}
         >
             <Tab.Screen name="List" component={ListStack} options={{
+                title: t('header.list'),
                 headerShown: false,
                 tabBarIcon: ({ focused }) => (
                     <Image
@@ -75,6 +76,7 @@ const BottomTabs = () => {
                 )}}
             />
             <Tab.Screen name="SettingsTab" component={SettingsStack} options={{
+                title: t('header.settings'),
                 headerShown: false,
                 tabBarIcon: ({ focused }) => (
                     <Image
