@@ -27,7 +27,7 @@ export const useDataFetching = () => {
 
         if (localData !== null) {
           const parsed = JSON.parse(localData);
-          
+
           if (JSON.stringify(lastDataRef.current) !== JSON.stringify(parsed)) {
             setData(parsed);
             lastDataRef.current = parsed;
