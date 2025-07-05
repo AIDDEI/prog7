@@ -25,7 +25,7 @@ export default function useCurrentLocation() {
                 setLocation
             );
         }
-        
+
         subscribe();
         return () => {
             if (subscription) subscription.remove();
