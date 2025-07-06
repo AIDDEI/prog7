@@ -158,7 +158,6 @@ const LocationScreen = () => {
                     navigation.navigate('Map', {
                         latitude: location?.latitude,
                         longitude: location?.longitude,
-                        name: location?.name,
                     })
                 }
             />
